@@ -10,38 +10,8 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 #  
 #  
-import pexpect
-def loadLibrary(libname, ffi):
-	print ("Looking for", libname)
-	p=pexpect.run(r'ld -o /dev/null --verbose -l%s'%libname).split('-l%s'%libname)[1].split('(')[1].split(')')[0]
-	print ("Results:",p)
-	return ffi.dlopen(p,ffi.RTLD_GLOBAL)
-from math import sin,cos,radians
-Sin=lambda s:sin(radians(s))
-Cos=lambda s:cos(radians(s))
-import os
-import glfw_h
-import horde3d_h
-import cffi
-from matrix import Matrix
 
-ffi=cffi.FFI()
-ffi.include(glfw_h.ffi)
-ffi.include(horde3d_h.ffi)
-
-from weakref import ref
-
-loadLibrary('X11',ffi)
-h3d=loadLibrary('Horde3D',horde3d_h.ffi)
-h3dut=loadLibrary('Horde3DUtils',horde3d_h.ffi)
-glfw=loadLibrary('glfw',glfw_h.ffi)
-
-globals().update(horde3d_h.getfunctions(h3d))
-globals().update(horde3d_h.getfunctions(h3dut))
-globals().update(glfw_h.getfunctions(glfw))
-globals().update(horde3d_h.s)
-
-
+from h3d import *
 glfwStarted=False
 
 class glfwWindow:
