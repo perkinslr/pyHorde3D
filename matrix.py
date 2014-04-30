@@ -14,10 +14,13 @@
 from math import sin,cos,radians
 Sin=lambda s:sin(radians(s))
 Cos=lambda s:cos(radians(s))
-import cffi,pexpect
+import cffi,subprocess
 ffi=cffi.FFI()
-dta=pexpect.run('gcc -E matrix.h').split('\r\n')
-dta='\n'.join(l for l in dta if '#' not in l)
+
+t=subprocess.Popen(['gcc','-E','matrix.h'],stdout=subprocess.PIPE)
+t.wait()
+dta=t.stdout.read()
+
 ffi.cdef(dta)
 
 matrix=ffi.dlopen('./_matrix.so')

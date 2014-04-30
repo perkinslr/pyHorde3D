@@ -10,12 +10,11 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 #  
 #  
-
+import pexpect
 def loadLibrary(libname, ffi):
-	import pexpect
-	print "Looking for", libname
+	print ("Looking for", libname)
 	p=pexpect.run(r'ld -o /dev/null --verbose -l%s'%libname).split('-l%s'%libname)[1].split('(')[1].split(')')[0]
-	print "Results:",p
+	print ("Results:",p)
 	return ffi.dlopen(p,ffi.RTLD_GLOBAL)
 from math import sin,cos,radians
 Sin=lambda s:sin(radians(s))
@@ -76,7 +75,7 @@ class glfwWindow:
 	def setSize(self, width, height):
 		glfwSetWindowSize(self._window, width, height)
 	def onClose(self, *args):
-		print "onClose stub"
+		print ("onClose stub")
 	def swapBuffers(self):
 		glfwSwapBuffers(self._window)
 	def makeActive(self):
@@ -188,15 +187,12 @@ class PlayerController:
 			stop()
 		elif key==82: #r
 			self._matrix.rotate(0,0,1)
-			print self._matrix.getRotation()
 		elif key==80: #p
 			self._matrix.rotate(1,0,0)
-			print self._matrix.getRotation()
 		elif key==89: #y
 			self._matrix.rotate(0,1,0)
-			print self._matrix.getRotation()
 		else:
-			print key
+			print (key)
 		self.update()
 	def translate(self,x,y,z):
 		self._matrix.translate(x,y,z)
@@ -205,7 +201,6 @@ class PlayerController:
 		self._matrix.rotate(pitch,yaw,roll)
 		self.update()
 	def update(self):
-		print 209,self._matrix.getTranslation()
 		h3dSetNodeTransform(self._node,*(self._matrix.getTranslation()+self._matrix.getRotation()+self._matrix.getScale()))
 
 

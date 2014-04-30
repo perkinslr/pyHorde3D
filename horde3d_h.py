@@ -11,11 +11,10 @@
 #  
 #  
 
-import os
-os.system('gcc -E %s/Horde3DUtils.h -DDLL='' > horde3d.h'%os.environ.get('HORDE3DINCLUDE',os.getcwd()))
-
-with open('horde3d.h') as f:
-	data=f.read()
+import os, subprocess
+t=subprocess.Popen(['gcc','-E',"%s/Horde3DUtils.h"%os.environ.get('HORDE3DINCLUDE',os.getcwd()),'-DDLL='],stdout=subprocess.PIPE)
+t.wait()
+data=t.stdout.read()
 
 import re
 structs=re.compile('struct ([a-zA-Z0-9]+).*?\n{*(\n*?.*?)*? enum [a-zA-Z]*.*?\n.*\n?([ 0-9a-zA-Z=,\n]+)?')
