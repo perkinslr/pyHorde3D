@@ -12,7 +12,7 @@
 //  
 
 
-#include "../Horde3D/Horde3D/Source/Shared/utMath.h"
+#include "../../Horde3D/Horde3D/Source/Shared/utMath.h"
 #include "matrix.h"
 #include <stdio.h>
 extern "C" {
