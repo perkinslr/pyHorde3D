@@ -13,7 +13,7 @@
 
 from h3d import *
 glfwStarted=False
-
+from matrix import Matrix
 class glfwWindow:
 	def __init__(self, width, height, title, monitor=ffi.NULL):
 		global glfwStarted
@@ -45,7 +45,7 @@ class glfwWindow:
 	def setSize(self, width, height):
 		glfwSetWindowSize(self._window, width, height)
 	def onClose(self, *args):
-		print ("onClose stub")
+		print "onClose stub"
 	def swapBuffers(self):
 		glfwSwapBuffers(self._window)
 	def makeActive(self):
@@ -162,8 +162,8 @@ class PlayerController:
 		elif key==89: #y
 			self._matrix.rotate(0,1,0)
 		else:
-			print (key)
-		self.update()
+			print key
+			self.update()
 	def translate(self,x,y,z):
 		self._matrix.translate(x,y,z)
 		self.update()

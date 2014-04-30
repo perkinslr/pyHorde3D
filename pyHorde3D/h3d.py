@@ -12,9 +12,9 @@
 #  
 import pexpect
 def loadLibrary(libname, ffi):
-	print ("Looking for", libname)
+	print "Looking for", libname
 	p=pexpect.run(r'ld -o /dev/null --verbose -l%s'%libname).split('-l%s'%libname)[1].split('(')[1].split(')')[0]
-	print ("Results:",p)
+	print "Results:",p
 	return ffi.dlopen(p,ffi.RTLD_GLOBAL)
 from math import sin,cos,radians
 Sin=lambda s:sin(radians(s))
@@ -23,7 +23,6 @@ import os
 import glfw_h
 import horde3d_h
 import cffi
-from matrix import Matrix
 
 ffi=cffi.FFI()
 ffi.include(glfw_h.ffi)
