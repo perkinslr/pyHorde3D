@@ -126,7 +126,7 @@ class Camera:
 		h3d.h3dResizePipelineBuffers( hdr_resource, 2880, 1600 );
 		forwardPipeRes = h3d.h3dAddResource( H3DResTypes.Pipeline, "pipelines/forward.pipeline.xml", 0 );
 		h3d.h3dResizePipelineBuffers( forwardPipeRes, 2880, 1600 );
-		h3dut.h3dutLoadResourcesFromDisk('/home/perkins/svn/Horde3D/Horde3D/Binaries/Content')
+		h3dut.h3dutLoadResourcesFromDisk(os.environ.get('HORDE3DCONTENTPATH'))
 		self._parent=ref(parent)
 		self._camera=h3d.h3dAddCameraNode(parent._node, name, hdr_resource)
 		h3dSetupCameraView(self._camera, 60, 4/3., 0.1, 1.93776e13)
@@ -137,7 +137,7 @@ class Camera:
 class DisplayObject:
 	def __init__(self, name, parent, x, y, z,resource):
 		resource=h3d.h3dAddResource(H3DResTypes.SceneGraph, resource, 0)
-		h3dut.h3dutLoadResourcesFromDisk('/home/perkins/svn/Horde3D/Horde3D/Binaries/Content')
+		h3dut.h3dutLoadResourcesFromDisk(os.environ.get('HORDE3DCONTENTPATH'))
 		self._parent=ref(parent)
 		self._node=h3d.h3dAddNodes(parent._node, resource)
 
@@ -150,7 +150,7 @@ class PlayerController:
 		self._matrix.translate(x,y,z)
 		self._matrix.rotate(roll,pitch,yaw)
 		sphere_resource=h3d.h3dAddResource(H3DResTypes.SceneGraph, "models/sphere/sphere.scene.xml", 0 )
-		h3dut.h3dutLoadResourcesFromDisk('/home/perkins/svn/Horde3D/Horde3D/Binaries/Content')
+		h3dut.h3dutLoadResourcesFromDisk(os.environ.get('HORDE3DCONTENTPATH'))
 		self._parent=parent
 		self._node=h3d.h3dAddNodes(1, sphere_resource)
 		h3dSetNodeTransform(self._node, x,y,z,0,0,0,0.1,0.1,0.1)
@@ -230,36 +230,36 @@ class Light:
 
 
 
-
-
-w=Horde3DWindow(2880,1620,'xyzzy')
-p=PlayerController('demo player', w, 0,0,4563871000,0,0,0)
-w.renderView(p._camera)
-h3d.h3dSetOption( H3DOptions.LoadTextures, 1 );
-h3d.h3dSetOption( H3DOptions.TexCompression, 0 );
-h3d.h3dSetOption( H3DOptions.FastAnimation, 0 );
-h3d.h3dSetOption( H3DOptions.MaxAnisotropy, 4 );
-h3d.h3dSetOption( H3DOptions.ShadowMapSize, 2048 );
-l=Light("Light1", RootNode, 0, 15, 10, -60, 0, 0, 10, 360, 10, 10, 10.0);
-k=DisplayObject('knight',RootNode, 0,0,0,"models/knight/knight.scene.xml")
-s=DisplayObject('sphere',RootNode, 0,0,0,"models/sphere/sphere.scene.xml")
-h3dut.h3dutLoadResourcesFromDisk('/home/perkins/svn/Horde3D/Horde3D/Binaries/Content')
-h3dSetNodeTransform( s._node, 0, -20, 0, 0, 0, 0, 4563871000, 4563871000, 4563871000 );
-
-h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportXI, 0 );
-h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportYI, 0 );
-h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportWidthI, 2880 );
-h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportHeightI, 1620 );
-
-
-h3d.h3dSetOption( H3DOptions.WireframeMode, 0 );
-
-import time
-_stop=False
-def stop():
-	global _stop
-	_stop=True
-while not _stop:
-	time.sleep(1/60.)
+if __name__=='__main__':
+	w=Horde3DWindow(2880,1620,'xyzzy')
+	p=PlayerController('demo player', w, 0,0,4563871000,0,0,0)
 	w.renderView(p._camera)
-
+	h3d.h3dSetOption( H3DOptions.LoadTextures, 1 );
+	h3d.h3dSetOption( H3DOptions.TexCompression, 0 );
+	h3d.h3dSetOption( H3DOptions.FastAnimation, 0 );
+	h3d.h3dSetOption( H3DOptions.MaxAnisotropy, 4 );
+	h3d.h3dSetOption( H3DOptions.ShadowMapSize, 2048 );
+	l=Light("Light1", RootNode, 0, 15, 10, -60, 0, 0, 10, 360, 10, 10, 10.0);
+	k=DisplayObject('knight',RootNode, 0,0,0,"models/knight/knight.scene.xml")
+	s=DisplayObject('sphere',RootNode, 0,0,0,"models/sphere/sphere.scene.xml")
+	h3dut.h3dutLoadResourcesFromDisk('/home/perkins/svn/Horde3D/Horde3D/Binaries/Content')
+	h3dSetNodeTransform( s._node, 0, -20, 0, 0, 0, 0, 4563871000, 4563871000, 4563871000 );
+	
+	h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportXI, 0 );
+	h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportYI, 0 );
+	h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportWidthI, 2880 );
+	h3d.h3dSetNodeParamI( p._camera._camera, H3DCamera.ViewportHeightI, 1620 );
+	
+	
+	h3d.h3dSetOption( H3DOptions.WireframeMode, 0 );
+	
+	import time
+	_stop=False
+	def stop():
+		global _stop
+		_stop=True
+	while not _stop:
+		time.sleep(1/60.)
+		w.renderView(p._camera)
+	
+	
