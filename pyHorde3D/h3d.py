@@ -35,7 +35,8 @@ h3d=loadLibrary('Horde3D',horde3d_h.ffi)
 h3dut=loadLibrary('Horde3DUtils',horde3d_h.ffi)
 glfw=loadLibrary('glfw',glfw_h.ffi)
 
-globals().update(horde3d_h.getfunctions(h3d))
-globals().update(horde3d_h.getfunctions(h3dut))
+globals().update(horde3d_h.getfunctions(h3dut)[0])
+globals().update(horde3d_h.getfunctions(h3d)[0])
+
 globals().update(glfw_h.getfunctions(glfw))
 globals().update(horde3d_h.s)
