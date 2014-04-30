@@ -20,7 +20,7 @@ def loadLibrary(libname, ffi):
 from math import sin,cos,radians
 Sin=lambda s:sin(radians(s))
 Cos=lambda s:cos(radians(s))
-
+import os
 import glfw_h
 import horde3d_h
 import cffi
