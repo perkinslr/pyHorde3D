@@ -12,7 +12,7 @@
 #  
 
 import os, subprocess
-t=subprocess.Popen(['gcc','-E',"%s/Horde3DUtils.h"%os.environ.get('HORDE3DINCLUDE',os.getcwd()),'-DDLL='],stdout=subprocess.PIPE)
+t=subprocess.Popen(['gcc','-E',"%s/Horde3DUtils.h"%os.environ.get('HORDE3DINCLUDE','/usr/local/include'),'-DDLL='],stdout=subprocess.PIPE)
 t.wait()
 data=t.stdout.read()
 
@@ -53,17 +53,16 @@ cdefs=structs.split(data)[-1].replace('''};
 
 cdefs=re.sub(' [a-zA-Z0-9]+::[a-zA-Z0-9]+ ',' int ',cdefs)
 
-print >> open('out.txt','w'), cdefs
 
 ffi.cdef(cdefs)
 
 
 def getfunctions(lib):
-	functions={}
 	for f in re.findall('\n[a-zA-Z*]+ ([a-zA-Z0-9]+)\(',cdefs):
+		print f
 		try:
 			functions[f]=getattr(lib,f)
-		except:
-			pass
+		except Exception as e:
+			print e
 	return functions
 

@@ -41,8 +41,8 @@ symbols=dict(
 
 
 
-symbols.update(horde3d_h.getfunctions(h3dut)[0])
-symbols.update(horde3d_h.getfunctions(h3d)[0])
+symbols.update(horde3d_h.getfunctions(h3dut))
+symbols.update(horde3d_h.getfunctions(h3d))
 
 symbols.update(glfw_h.getfunctions(glfw))
 symbols.update(horde3d_h.s)
