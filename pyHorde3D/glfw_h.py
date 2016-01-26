@@ -14,7 +14,7 @@
 
 
 import os, re, subprocess
-t=subprocess.Popen(('gcc -E /usr/include/GLFW/glfw3.h').split(),stdout=subprocess.PIPE)
+t=subprocess.Popen(('gcc -E %s/glfw3.h'%os.environ.get('GLFWINCLUDE', '/usr/include/GLFW')).split(),stdout=subprocess.PIPE)
 data=''
 while t.poll() is None:
 	data+=t.stdout.read()
