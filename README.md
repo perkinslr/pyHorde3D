@@ -10,7 +10,7 @@ It should work with mingw/msys or cygwin on windows, but relies on the ld librar
 I've tested using pypy-2.5.1 with cffi 0.8.2 and python 2.7.9 with cffi 0.9.2 
 
 
-The low level wrapper automatically reads various header files to determine the functions available and dynamically loads several shared libraries.  The locations for the various headers and libraries are controlled via the folowing environment variables; the include paths can be hardcoded in the <libname>_h.py files, the library paths are in h3d.py, and the content path is in Horde3D.py
+The low level wrapper automatically reads various header files to determine the functions available and dynamically loads several shared libraries.  The locations for the various headers and libraries are controlled via the folowing environment variables; the include paths can be hardcoded in the (libname)_h.py files, the library paths are in h3d.py, and the content path is in Horde3D.py
 
 H3DCONTENT to the content directory containing your resources (.)
 
