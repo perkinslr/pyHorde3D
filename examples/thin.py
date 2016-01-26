@@ -1,4 +1,4 @@
-from h3d import *
+from pyHorde3D.h3d import *
 import os
 glfwInit()
 w1=glfwCreateWindow(800,600,"hello1", ffi.NULL, ffi.NULL)

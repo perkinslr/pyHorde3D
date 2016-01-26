@@ -1,4 +1,4 @@
-from Horde3D import *
+from pyHorde3D/Horde3D import *
 import time
 w = glfwWindow(800,600, 'basic horde').onInitialize()
 
