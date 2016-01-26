@@ -1,4 +1,4 @@
-from Horde3D import h3dWorld, h3dCamera, glfwWindow, h3dLight, h3dResource, SimpleNode, h3dut, H3DResTypes, H3DOptions
+from pyHorde3D.Horde3D import h3dWorld, h3dCamera, glfwWindow, h3dLight, h3dResource, SimpleNode, h3dut, H3DResTypes, H3DOptions
 
 window=glfwWindow(800,600,"sphere").onInitialize()
 
