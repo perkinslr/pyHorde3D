@@ -1,6 +1,6 @@
 #  horde3d_h.py
 #  
-#  Copyright 2014 Logan Perkins <perkins@gentoo-flip>
+#  Copyright 2014 Logan Perkins <perkins@lp-programming.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the Eclipse Public License 1.0
@@ -12,9 +12,10 @@
 #  
 
 import os, subprocess
-t=subprocess.Popen(['gcc','-E',"%s/Horde3DUtils.h"%os.environ.get('HORDE3DINCLUDE','/usr/local/include'),'-DDLL='],stdout=subprocess.PIPE)
+t=subprocess.Popen(['gcc','-E',"-I", os.environ.get('HORDE3DINCLUDE','/usr/local/include'), "%s/Horde3DUtils.h"%os.environ.get('HORDE3DINCLUDE','/usr/local/include'),'-DDLL='],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 t.wait()
-data=t.stdout.read()
+data=t.stdout.readlines()
+data=str.join('', [l for l in data if '#' not in l])
 
 import re
 structs=re.compile('struct ([a-zA-Z0-9]+).*?\n{*(\n*?.*?)*? enum [a-zA-Z]*.*?\n.*\n?([ 0-9a-zA-Z=,\n]+)?')
@@ -58,8 +59,8 @@ ffi.cdef(cdefs)
 
 
 def getfunctions(lib):
-	for f in re.findall('\n[a-zA-Z*]+ ([a-zA-Z0-9]+)\(',cdefs):
-		print f
+	functions={}
+	for f in re.findall('([a-zA-Z][a-zA-Z0-9]*)\(',cdefs):
 		try:
 			functions[f]=getattr(lib,f)
 		except Exception as e:

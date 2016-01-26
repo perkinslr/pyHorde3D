@@ -13,11 +13,12 @@
 
 
 
-import os, re
-os.system('gcc -E /usr/include/GLFW/glfw3.h > glfw3.h')
-
-with open('glfw3.h') as f:
-	data=f.read()
+import os, re, subprocess
+t=subprocess.Popen(('gcc -E /usr/include/GLFW/glfw3.h').split(),stdout=subprocess.PIPE)
+data=''
+while t.poll() is None:
+	data+=t.stdout.read()
+data = (data+t.stdout.read()).replace('\r\n','\n')
 
 data=data.split('typedef void ( * PFNGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC) (GLenum target, GLeglImageOES image);')[1].replace('\n ','\n')
 import cffi
@@ -28,7 +29,7 @@ ffi.cdef(data)
 
 def getfunctions(lib):
 	functions={}
-	for f in re.findall('\n[a-zA-Z*]+ ([a-zA-Z0-9]+)\(',data):
+	for f in re.findall('\n[a-zA-Z* ]+? \*{0,1}([a-zA-Z0-9]+)\(',data):
 		try:
 			functions[f]=getattr(lib,f)
 		except:

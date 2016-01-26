@@ -1,6 +1,6 @@
 #  h3d.py
 #  
-#  Copyright 2014 Logan Perkins <perkins@gentoo-flip>
+#  Copyright 2014 Logan Perkins <perkins@lp-programming.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the Eclipse Public License 1.0
@@ -10,12 +10,16 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 #  
 #  
-import pexpect
+import subprocess, os
 def loadLibrary(libname, ffi):
 	print "Looking for", libname
-	p=pexpect.run(r'ld -o /dev/null --verbose -l%s'%libname).split('-l%s'%libname)[1].split('(')[1].split(')')[0]
+	t=subprocess.Popen(['ld', '-o', '/dev/null', '--verbose', '-L%s'%os.environ.get('HORDELIB','/usr/local/lib'), '-l%s'%libname ],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	t.wait()
+	p=t.stdout.read().split('-l%s'%libname)[1].split('(')[1].split(')')[0]
 	print "Results:",p
 	return ffi.dlopen(p,ffi.RTLD_GLOBAL)
+
+
 from math import sin,cos,radians
 
 import os
@@ -42,9 +46,12 @@ symbols=dict(
 
 
 symbols.update(horde3d_h.getfunctions(h3dut))
-symbols.update(horde3d_h.getfunctions(h3d))
+#symbols.update(horde3d_h.getfunctions(h3d))
 
 symbols.update(glfw_h.getfunctions(glfw))
 symbols.update(horde3d_h.s)
 
 globals().update(symbols)
+
+print "GLFW Version:", ffi.string(glfwGetVersionString())
+print "Horde3d Version:", ffi.string(h3dGetVersionString())
