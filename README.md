@@ -11,9 +11,13 @@ I've tested using pypy-2.5.1 with cffi 0.8.2 and python 2.7.9 with cffi 0.9.2
 
 
 The low level wrapper automatically reads various header files to determine the functions available and dynamically loads several shared libraries.  The locations for the various headers and libraries are controlled via the folowing environment variables; the include paths can be hardcoded in the <libname>_h.py files, the library paths are in h3d.py, and the content path is in Horde3D.py
+
 H3DCONTENT to the content directory containing your resources (.)
+
 HORDELIB to the location that holds libHorde3D.so (/usr/local/lib)
+
 HORDE3DINCLUDE to the location of Horde3DUtils.h (/usr/local/include)
+
 GLFWINCLUDE to the location of glfw3.h (/usr/include/GLFW)
 
 Additionally, libX11 is expected to be findable by LD
